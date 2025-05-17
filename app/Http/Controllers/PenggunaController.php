@@ -11,7 +11,7 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        return view('pengguna.index');
     }
 
     public function tampil()
