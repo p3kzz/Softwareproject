@@ -7,7 +7,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pengguna.index');
 });
 
 // Route::get('/dashboard', function () {
@@ -34,6 +34,6 @@ Route::middleware(['auth', 'kasir'])->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/admin.index', [AdminController::class, 'admin']);
-Route::get('/index', [PenggunaController::class, 'tampil']);
+Route::get('/index', [PenggunaController::class, 'index']);
 Route::get('/menu', [PenggunaController::class, 'menu']);
 Route::get('/data', [PenggunaController::class, 'data']);
