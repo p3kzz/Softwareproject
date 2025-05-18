@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('pesanan_id')->constrained('pesanan')->onDelete('cascade');
-            $table->tinyInteger('rating'); // contoh: 1 sampai 5
+            $table->tinyInteger('rating');
             $table->string('komentar', 255)->nullable();
             $table->timestamps();
         });
