@@ -46,6 +46,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('pengguna.index', absolute: false));
+        return redirect(route('index', absolute: false));
     }
 }
