@@ -24,7 +24,7 @@ class PenggunaController extends Controller
         return view('pengguna.menu');
     }
 
-public function data()
+    public function data()
     {
         return view('pengguna.data');
     }

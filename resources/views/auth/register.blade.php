@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -71,12 +69,11 @@
                             </div>
 
                             <div class="col-md-12 form-group">
-                                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                        href="{{ route('login') }}">
-                                        {{ __('Already registered?') }}
-                                    </a>
-                                <button type="submit" value="submit"
-                                    class="primary-btn">{{ __('Register') }}</button>
+                                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                    href="{{ route('login') }}">
+                                    {{ __('Already registered?') }}
+                                </a>
+                                <button type="submit" value="submit" class="primary-btn">{{ __('Register') }}</button>
                             </div>
                         </form>
                     </div>

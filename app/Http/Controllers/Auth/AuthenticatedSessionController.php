@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->role === 'admin') {
             return redirect()->intended('/admin/dashboard');
         } elseif ($user->role === 'pengguna') {
-            return redirect()->intended('/index');
+            return redirect()->intended('/dashboard');
         } else {
             return redirect()->intended('/dashboard');
         }
