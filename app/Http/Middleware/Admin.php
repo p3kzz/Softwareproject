@@ -16,9 +16,14 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-       if (Auth::check() && Auth::user()->role == 'admin') {
-    return $next($request);
-    }
-    abort(401);
+        if (!Auth::check()) {
+            return redirect('/login'); // Redirect ke login kalau belum login
+        }
+
+        if (Auth::user()->role !== 'admin') {
+            abort(403); // Forbidden kalau bukan admin
+        }
+
+        return $next($request);
     }
 }

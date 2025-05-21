@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -55,8 +53,8 @@
                     <x-auth-session-status class="mb-4" :status="session('status')" />
                     <div class="login_form_inner">
                         <h3>Log in to enter</h3>
-                        <form class="row login_form"
-                            novalidate="novalidate" method="POST" action="{{ route('login') }}">
+                        <form class="row login_form" novalidate="novalidate" method="POST"
+                            action="{{ route('login') }}">
                             @csrf
                             <div class="col-md-12 form-group">
                                 <input type="email" for="email" :value="__('Email')" class="form-control"
@@ -82,12 +80,12 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 @if (Route::has('password.request'))
-                                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                href="{{ route('password.request') }}">
-                                {{ __('Forgot your password?') }}
-                            </a>
-                                 @endif
-                            <button type="submit" value="submit" class="primary-btn">{{ __('Log in') }}</button>
+                                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                        href="{{ route('password.request') }}">
+                                        {{ __('Forgot your password?') }}
+                                    </a>
+                                @endif
+                                <button type="submit" value="submit" class="primary-btn">{{ __('Log in') }}</button>
                             </div>
                         </form>
                     </div>
