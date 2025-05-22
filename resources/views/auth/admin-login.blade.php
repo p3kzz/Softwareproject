@@ -36,7 +36,7 @@
     <section class="login_box_area section_gap">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <x-auth-session-status class="mb-4" :status="session('status')" />
                     <div class="login_form_inner">
                         <h3>Log in to enter</h3>
