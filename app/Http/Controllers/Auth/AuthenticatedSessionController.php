@@ -31,9 +31,16 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            Auth::logout();
+            return redirect('/login')->withErrors([
+                'email' => 'Admin tidak boleh login dari halaman ini.',
+            ]);
+        }
+
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin');
         } elseif ($user->role === 'pengguna') {
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/pengguna');
         } else {
             return redirect()->intended('/dashboard');
         }
