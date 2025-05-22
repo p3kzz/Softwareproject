@@ -17,11 +17,14 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect('/login'); // Redirect ke login kalau belum login
+            return redirect()->route('admin.login');
         }
 
-        if (Auth::user()->role !== 'admin') {
-            abort(403); // Forbidden kalau bukan admin
+        $user = Auth::user();
+
+        if ($user->role !== 'admin') {
+            Auth::logout();
+            return redirect('/')->with('error', 'Hanya admin yang boleh login dari halaman ini.');
         }
 
         return $next($request);

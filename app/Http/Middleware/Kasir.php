@@ -16,9 +16,11 @@ class Kasir
      */
     public function handle(Request $request, Closure $next): Response
     {
-       if (Auth::check() && Auth::user()->role == 'kasir') {
-    return $next($request);
-    }
-    abort(402);
+        if (!Auth::check() || Auth::user()->role !== 'kasir') {
+            Auth::logout();
+            return redirect('/');
+        }
+
+        return $next($request);
     }
 }
