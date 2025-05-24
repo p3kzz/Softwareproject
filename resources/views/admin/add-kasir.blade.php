@@ -32,7 +32,8 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="name">
-                                                    <label class="text-sm mb-0 text-capitalize font-weight-bold">Email</label>
+                                                    <label
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Email</label>
                                                     <input type="email" class="form-control" name=""
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>
@@ -63,8 +64,8 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="name">
-                                                    <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Confirm Password</label>
+                                                    <label class="text-sm mb-0 text-capitalize font-weight-bold">Confirm
+                                                        Password</label>
                                                     <input type="password" class="form-control" name=""
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>

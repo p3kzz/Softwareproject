@@ -7,7 +7,16 @@
                     <div class="card-header pb-0">
                         <h6>Tambah Menu</h6>
                     </div>
-                    <form class="" novalidate="novalidate" method="POST" action="">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('admin.menu.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row px-4">
                             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -18,7 +27,7 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Gambar</label>
-                                                    <input type="file" class="form-control" name=""
+                                                    <input type="file" class="form-control" name="gambar"
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>
                                             </div>
@@ -34,7 +43,7 @@
                                                 <div class="name">
                                                     <label class="text-sm mb-0 text-capitalize font-weight-bold">Nama
                                                         Menu</label>
-                                                    <input type="text" class="form-control" name=""
+                                                    <input type="text" class="form-control" name="nama_menu"
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>
                                             </div>
@@ -48,10 +57,15 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="name">
-                                                    <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Kategori</label>
-                                                    <input type="text" class="form-control" name=""
-                                                        id="formGroupExampleInput" placeholder="Input" required>
+                                                    <label for="kategori">Kategori</label>
+                                                    <select name="kategori_id" id="kategori_id" class="form-control"
+                                                        required>
+                                                        <option value="" disabled selected>Pilih Kategori</option>
+                                                        @foreach ($kategori as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->nama_kategori }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +80,7 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Deskripsi</label>
-                                                    <input type="text" class="form-control" name=""
+                                                    <input type="text" class="form-control" name="deskripsi"
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>
                                             </div>
@@ -82,8 +96,9 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Stok</label>
-                                                    <input type="text" class="form-control" name=""
-                                                        id="formGroupExampleInput" placeholder="Input" required>
+                                                    <input type="number" class="form-control" name="stok"
+                                                        id="formGroupExampleInput" step="1" min="0"
+                                                        placeholder="Input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,8 +113,9 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Harga</label>
-                                                    <input type="text" class="form-control" name=""
-                                                        id="formGroupExampleInput" placeholder="Input" required>
+                                                    <input type="number" class="form-control" name="harga"
+                                                        id="formGroupExampleInput" step="0.01" min="0"
+                                                        placeholder="Input" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +125,7 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a href="" class="btn btn-danger">Kembali</a>
+                            <a href="{{ route('admin.menu.index') }}" class="btn btn-danger">Kembali</a>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
@@ -18,7 +21,8 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
-        Route::get('/index', [AdminController::class, 'admin']);
+        Route::resource('menu', MenuController::class)->names('admin.menu');
+        Route::resource('kategori', KategoriController::class)->names('admin.kategori');
     });
 });
 
@@ -40,23 +44,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// -----------------------------
-// 👥 PENGGUNA ROUTE
-// -----------------------------
 Route::middleware(['auth', 'pengguna'])->group(function () {
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
 });
 
-// -----------------------------
-// 💼 KASIR ROUTE
-// -----------------------------
 Route::middleware(['auth', 'kasir'])->group(function () {
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
 });
 
-// -----------------------------
-// ✨ ROUTE BAWAAN DAN LAINNYA
-// -----------------------------
 require __DIR__ . '/auth.php';
 
 Route::get('/menu', [PenggunaController::class, 'menu']);
