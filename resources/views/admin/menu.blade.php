@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
     <div class="container-fluid py-4">
         <a href="{{ route('admin.menu.create') }}" class="btn btn-primary ml-5 mt-3">+ Tambah Menu</a>
         <div class="row">
@@ -57,9 +56,10 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">
-                                                    Rp. {{ number_format($menu->harga, 0, ',', '.') }}
+                                                    Rp. {{ $menu->harga }}
                                                 </span>
                                             </td>
+
                                             <td class="align-middle">
                                                 <a href="#" class="text-secondary font-weight-bold text-xs"
                                                     data-toggle="tooltip" title="Edit">
