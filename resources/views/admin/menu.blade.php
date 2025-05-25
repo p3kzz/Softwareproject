@@ -1,22 +1,8 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="card card-body mx-4 mt-n3">
-        <div class="row gx-4">
-            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                <div class="nav-wrapper position-relative end-0">
-                    <ul class="nav nav-pills nav-fill p-1 bg-transparent">
-                        <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1" href="{{ route('admin.menu.create') }}">
-                                <span class="ms-1">Tambah Menu</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container-fluid py-4">
+        <a href="{{ route('admin.menu.create') }}" class="btn btn-primary ml-5 mt-3">+ Tambah Menu</a>
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
