@@ -86,7 +86,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Tables</span>
+                        <span class="nav-link-text ms-1">Menu</span>
                     </a>
                 </li>
                 <li class="nav-item">

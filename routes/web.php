@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Kasir;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,7 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
+        Route::resource('kasir', KasirController::class)->names('admin.kasir');
         Route::resource('menu', MenuController::class)->names('admin.menu');
         Route::resource('kategori', KategoriController::class)->names('admin.kategori');
     });
