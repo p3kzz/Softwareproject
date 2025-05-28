@@ -17,13 +17,10 @@
                     <tr>
                         <td>{{ $item->nomor_meja }}</td>
                         <td>{{ $item->qr_token }}</td>
-                        <td><a href="{{ url('/pesanan?token=' . $item->qr_token) }}" target="_blank">Scan Link</a></td>
+                        <td><a href="{{ url('/order?token=' . $item->qr_token) }}" target="_blank">Scan Link</a></td>
                         <td>
-                            @if ($item->qr_image)
-                                <img src="{{ asset($item->qr_image) }}" alt="QR Code" style="width: 100px;">
-                            @else
-                                <span class="text-muted">Belum ada QR</span>
-                            @endif
+                            {{-- Langsung render QR-nya --}}
+                            {!! QrCode::size(100)->generate(url('/order?token=' . $item->qr_token)) !!}
                         </td>
                     </tr>
                 @endforeach
