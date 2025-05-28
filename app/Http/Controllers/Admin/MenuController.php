@@ -94,7 +94,12 @@ class MenuController extends Controller
             $validated['gambar'] = $menu->gambar;
         }
 
-        $menu->update($validated);
+        $menu->nama_menu = $request->nama_menu;
+        $menu->deskripsi = $request->deskripsi;
+        $menu->harga = $request->harga;
+        $menu->stok = $request->stok;
+        $menu->kategori_id = $request->kategori_id;
+        $menu->save();
         return redirect()->route('admin.menu.index')->with('success', 'menu berhasil diperbarui!');
     }
 
