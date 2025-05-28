@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\mejaQrController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\KasirController;
@@ -25,6 +26,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('kasir', KasirController::class)->names('admin.kasir');
         Route::resource('menu', MenuController::class)->names('admin.menu');
         Route::resource('kategori', KategoriController::class)->names('admin.kategori');
+        Route::resource('mejaQr', mejaQrController::class)->names('admin.mejaQr');
     });
 });
 

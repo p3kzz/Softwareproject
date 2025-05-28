@@ -16,6 +16,24 @@
                             </ul>
                         </div>
                     @endif
+                    <script>
+                        function previewImage() {
+                            const input = document.getElementById('image');
+                            const preview = document.getElementById('imagePreview');
+
+                            const file = input.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+
+                                reader.onload = function(e) {
+                                    preview.src = e.target.result;
+                                    preview.style.display = 'block';
+                                };
+
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    </script>
                     <form action="{{ route('admin.menu.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row px-4">
@@ -27,8 +45,10 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Gambar</label>
-                                                    <input type="file" class="form-control" name="gambar"
-                                                        id="formGroupExampleInput" placeholder="Input" required>
+                                                    <input type="file" class="form-control" name="gambar" id="image"
+                                                        onchange="previewImage()" required>
+                                                    <img id="imagePreview" src="#" alt="Preview Gambar"
+                                                        class="mt-3" style="display: none; max-height: 150px;">
                                                 </div>
                                             </div>
                                         </div>
