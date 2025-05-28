@@ -110,6 +110,6 @@ class MenuController extends Controller
     {
         $menu = MenuModel::findOrFail($id);
         $menu->delete();
-        return redirect()->route('admin.menu.index')->with('succes', 'Menu berhasil di perbarui');
+        return redirect()->route('admin.menu.index')->with('success', 'Menu berhasil di perbarui');
     }
 }

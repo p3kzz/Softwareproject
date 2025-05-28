@@ -4,10 +4,9 @@
     <div class="container">
         <h2 class="mb-4">Daftar Kategori Menu</h2>
 
-        @if (session('success'))
+        {{-- @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
+        @endif --}}
         <a href="{{ route('admin.kategori.create') }}" class="btn btn-primary mb-3">+ Tambah Kategori</a>
 
         <table class="table table-bordered">
@@ -26,11 +25,10 @@
                         <td>
                             <a href="{{ route('admin.kategori.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
                             <form action="{{ route('admin.kategori.destroy', $item->id) }}" method="POST"
-                                style="display:inline-block;"
-                                onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete">Hapus</button>
                             </form>
                         </td>
 
@@ -39,4 +37,40 @@
             </tbody>
         </table>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    <script>
+        // Konfirmasi sebelum menghapus
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('form');
+                const url = form.getAttribute('data-url');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
