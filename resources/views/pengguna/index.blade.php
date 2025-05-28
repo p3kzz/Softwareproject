@@ -90,7 +90,6 @@
         <!-- end slider section -->
     </div>
 
-
     <!-- about section -->
 
     <section class="about_section layout_padding">
