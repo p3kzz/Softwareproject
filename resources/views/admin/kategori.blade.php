@@ -24,8 +24,16 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $item->nama_kategori }}</td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('admin.kategori.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="{{ route('admin.kategori.destroy', $item->id) }}" method="POST"
+                                style="display:inline-block;"
+                                onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

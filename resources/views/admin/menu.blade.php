@@ -60,11 +60,16 @@
                                                 </span>
                                             </td>
 
-                                            <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" title="Edit">
-                                                    Edit
-                                                </a>
+                                            <td>
+                                                <a href="{{ route('admin.menu.edit', $menu->id) }}"
+                                                    class="btn btn-sm btn-primary">Edit</a>
+                                                <form action="{{ route('admin.menu.destroy', $menu->id) }}" method="POST"
+                                                    style="display:inline-block;"
+                                                    onsubmit="return confirm('Yakin ingin menghapus menu ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -8,6 +8,16 @@
                     <div class="card-header pb-0">
                         <h6>Tambah Kategori</h6>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form action="{{ route('admin.kategori.store') }}" method="POST">
                         @csrf
                         <div class="row px-4">
@@ -19,8 +29,14 @@
                                                 <div class="name">
                                                     <label
                                                         class="text-sm mb-0 text-capitalize font-weight-bold">Kategori</label>
-                                                    <input type="text" class="form-control" name="nama_kategori"
+                                                    <input type="text"
+                                                        class="form-control
+                                                         @error('nama_kategori')  is-invalid @enderror"
+                                                        name="nama_kategori" value="{{ old('nama_kategori') }}"
                                                         id="formGroupExampleInput" placeholder="Input" required>
+                                                    @error('nama_kategori')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>

@@ -33,7 +33,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_menu' => 'required|string|max:255',
+            'nama_menu' => 'required|string|max:255|unique:menu,nama_menu',
             'deskripsi' => 'nullable|string',
             'harga' => 'required|numeric',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
@@ -44,8 +44,8 @@ class MenuController extends Controller
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             $namafile = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('public/images'), $namafile);
-            $validated['gambar'] = 'public/images/' . $namafile;
+            $file->move(public_path('images'), $namafile);
+            $validated['gambar'] = 'images/' . $namafile;
         }
 
         MenuModel::create($validated);
@@ -65,7 +65,9 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $kategori = KategoriModel::all();
+        $menu = MenuModel::findOrFail($id);
+        return view('admin.menu-edit', compact('menu', 'kategori'));
     }
 
     /**
@@ -73,7 +75,27 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $menu = MenuModel::findOrFail($id);
+        $request->validate([
+            'nama_menu' => 'required|string|max:255|unique:menu,nama_menu,' . $id,
+            'deskripsi' => 'nullable|string',
+            'harga' => 'required|numeric',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'stok' => 'required|numeric',
+            'kategori_id' => 'required|exists:kategori,id',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $namafile = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $namafile);
+            $validated['gambar'] = 'images/' . $namafile;
+        } else {
+            $validated['gambar'] = $menu->gambar;
+        }
+
+        $menu->update($validated);
+        return redirect()->route('admin.menu.index')->with('success', 'menu berhasil diperbarui!');
     }
 
     /**
@@ -81,6 +103,8 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $menu = MenuModel::findOrFail($id);
+        $menu->delete();
+        return redirect()->route('admin.menu.index')->with('succes', 'Menu berhasil di perbarui');
     }
 }
