@@ -266,6 +266,8 @@
 
     </main>
 
+    <script src="{{ asset('sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    
     <!--   Core JS Files   -->
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
