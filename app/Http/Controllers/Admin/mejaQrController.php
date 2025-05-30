@@ -37,30 +37,26 @@ class mejaQrController extends Controller
         ]);
 
         $token = Str::random(10);
-        $url = url('/order?token=' . $token);
+        $url = url('/order/' . $token);
 
         $filename = 'qr_' . time() . '.png';
         $path = public_path('qrcodes/' . $filename);
         QrCode::format('png')->size(300)->generate($url, $path);
 
-        $meja = MejaQr::create([
+        MejaQr::create([
             'nomor_meja' => $request->nomor_meja,
             'qr_token' => $token,
             'qr_image' => 'qrcodes/' . $filename
         ]);
 
-        return redirect()->route('admin.mejaQr.show', $meja->id);
+        return redirect()->route('admin.mejaQr.index')->with('success', 'Meja berhasil ditambahkan!');
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        // $meja = MejaQr::findOrFail($id);
-        // $url = url('/order?token=' . $meja->qr_token);
-        // return view('admin.qr-preview', compact('meja', 'url'));
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.

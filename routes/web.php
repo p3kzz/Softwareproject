@@ -4,15 +4,16 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\mejaQrController;
 use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\Pengguna\KeranjangController;
+use App\Http\Controllers\Pengguna\menu;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Kasir;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pengguna.index');
+    return view('index');
 });
 
 // admin
@@ -56,7 +57,24 @@ Route::middleware(['auth', 'kasir'])->group(function () {
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
 });
 
-require __DIR__ . '/auth.php';
-
-Route::get('/menu', [PenggunaController::class, 'menu']);
+// pengguna
+Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+Route::get('/order/{token}', [PenggunaController::class, 'scanQR'])->name('scan.qr');
+Route::resource('menu', menu::class)->names('pengguna.menu');
 Route::get('/data', [PenggunaController::class, 'data']);
+Route::resource('keranjang', KeranjangController::class)->only([
+    'index',
+    'store',
+    'update',
+    'destroy'
+]);
+Route::patch('keranjang/{id}/tambah', [KeranjangController::class, 'increment'])->name('keranjang.increment');
+Route::patch('keranjang/{id}/kurang', [KeranjangController::class, 'decrement'])->name('keranjang.decrement');
+// Route::get('/reset-keranjang', function () {
+//     session()->forget('keranjang');
+//     return redirect()->route('keranjang.index')->with('success', 'Keranjang dikosongkan');
+// });
+
+
+
+require __DIR__ . '/auth.php';

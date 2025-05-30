@@ -17,10 +17,12 @@
                     <tr>
                         <td>{{ $item->nomor_meja }}</td>
                         <td>{{ $item->qr_token }}</td>
-                        <td><a href="{{ url('/order?token=' . $item->qr_token) }}" target="_blank">Scan Link</a></td>
+                        <td><a href="{{ url('/order/' . $item->qr_token) }}" target="_blank">Scan Link</a>
+                        </td>
                         <td>
                             {{-- Langsung render QR-nya --}}
-                            {!! QrCode::size(100)->generate(url('/order?token=' . $item->qr_token)) !!}
+                            {!! QrCode::size(100)->generate(url('/order/' . $item->qr_token)) !!}
+
                         </td>
                     </tr>
                 @endforeach
