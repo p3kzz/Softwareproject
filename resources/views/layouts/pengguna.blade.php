@@ -155,19 +155,19 @@
                             <a href="">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                                 <span>
-                                    Location
+                                    Uniba Madura
                                 </span>
                             </a>
                             <a href="">
                                 <i class="fa fa-phone" aria-hidden="true"></i>
                                 <span>
-                                    Call +01 1234567890
+                                    Call +62 878-4464-3553
                                 </span>
                             </a>
                             <a href="">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                                 <span>
-                                    demo@gmail.com
+                                    ach.baidhawi@gmail.com
                                 </span>
                             </a>
                         </div>
@@ -176,11 +176,10 @@
                 <div class="col-md-4 footer-col">
                     <div class="footer_detail">
                         <a href="" class="footer-logo">
-                            Feane
+                            Warung Makanku
                         </a>
                         <p>
-                            Necessary, making this the first true generator on the Internet. It uses a dictionary of
-                            over 200 Latin words, combined with
+                            No Time? No Problem. Grab a Bite, Feel Alright!
                         </p>
                         <div class="footer_social">
                             <a href="">
