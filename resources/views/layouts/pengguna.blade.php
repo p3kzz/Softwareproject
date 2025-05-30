@@ -72,6 +72,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('pengguna.menu.index') }}">Menu </a>
                             </li>
+                            <a href="{{ route('pengguna.keluar') }}" class="btn btn-danger">Keluar</a>
+
                         </ul>
                         <div class="user_option">
                             @auth

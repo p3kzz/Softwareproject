@@ -5,8 +5,10 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\mejaQrController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\Pengguna\CheckoutController;
 use App\Http\Controllers\Pengguna\KeranjangController;
 use App\Http\Controllers\Pengguna\menu;
+use App\Http\Controllers\Pengguna\MidtransController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Kasir;
@@ -59,10 +61,30 @@ Route::middleware(['auth', 'kasir'])->group(function () {
 
 // pengguna
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+Route::get('/keluar', [PenggunaController::class, 'keluar'])->name('pengguna.keluar');
+
 Route::get('/order/{token}', [PenggunaController::class, 'scanQR'])->name('scan.qr');
 Route::resource('menu', menu::class)->names('pengguna.menu');
 Route::get('/data', [PenggunaController::class, 'data']);
 Route::patch('menu/{id}/tambah', [menu::class, 'increment'])->name('menu.increment');
 Route::patch('menu/{id}/kurang', [menu::class, 'decrement'])->name('menu.decrement');
 
+// checkout
+Route::resource('checkout', CheckoutController::class);
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+// Form isian untuk tamu (guest)
+Route::get('/checkout/guest', [CheckoutController::class, 'create'])->name('checkout.guest');
+
+// Proses store (buat pesanan + dapatkan SnapToken)
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+// Halaman pembayaran (tampilkan SnapToken)
+Route::get('/checkout/bayar/{pesanan}', [CheckoutController::class, 'bayar'])->name('checkout.bayar');
+
+// Halaman sukses setelah redirect selesai
+Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+// Notifikasi Midtrans (dikirim oleh Midtrans setelah transaksi sukses/gagal)
+Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
 require __DIR__ . '/auth.php';
