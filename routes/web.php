@@ -62,19 +62,7 @@ Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.in
 Route::get('/order/{token}', [PenggunaController::class, 'scanQR'])->name('scan.qr');
 Route::resource('menu', menu::class)->names('pengguna.menu');
 Route::get('/data', [PenggunaController::class, 'data']);
-Route::resource('keranjang', KeranjangController::class)->only([
-    'index',
-    'store',
-    'update',
-    'destroy'
-]);
-Route::patch('keranjang/{id}/tambah', [KeranjangController::class, 'increment'])->name('keranjang.increment');
-Route::patch('keranjang/{id}/kurang', [KeranjangController::class, 'decrement'])->name('keranjang.decrement');
-// Route::get('/reset-keranjang', function () {
-//     session()->forget('keranjang');
-//     return redirect()->route('keranjang.index')->with('success', 'Keranjang dikosongkan');
-// });
-
-
+Route::patch('menu/{id}/tambah', [menu::class, 'increment'])->name('menu.increment');
+Route::patch('menu/{id}/kurang', [menu::class, 'decrement'])->name('menu.decrement');
 
 require __DIR__ . '/auth.php';
