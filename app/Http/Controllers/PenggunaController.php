@@ -95,4 +95,10 @@ class PenggunaController extends Controller
     {
         //
     }
+    public function keluar()
+    {
+        session()->flush(); // Menghapus semua data session
+
+        return redirect('/')->with('success', 'Berhasil keluar.');
+    }
 }
