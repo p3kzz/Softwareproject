@@ -37,7 +37,7 @@
                                                 <input type="hidden" name="jumlah" value="1">
                                                 <button type="submit"
                                                     style="background: none; border: none; padding: 0; margin: 0;">
-                                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                    <svg version="1.1" fill="white"  id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                         viewBox="0 0 456.029 456.029"
                                                         style="enable-background:new 0 0 456.029 456.029;"
@@ -135,7 +135,9 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Keranjang</h5>
+                    <h5 class="modal-title">Keranjang @if (session()->has('nomor_meja'))
+                                Meja {{ session('nomor_meja') }}
+                            @endif</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
