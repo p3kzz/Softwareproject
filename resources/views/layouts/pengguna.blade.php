@@ -36,6 +36,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 
 </head>
 
@@ -67,8 +69,11 @@
                                 <a class="nav-link" href="/">Home </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/menu">Menu </a>
+                                <a class="nav-link" href="{{ route('pengguna.menu.index') }}">Menu </a>
                             </li>
+                            @if (session()->has('nomor_meja'))
+                                <li>Meja #{{ session('nomor_meja') }}</li>
+                            @endif
                         </ul>
                         <div class="user_option">
                             @auth
@@ -94,7 +99,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </a>
                             @endauth
-                            <a class="cart_link" href="#">
+                            <a class="cart_link" href="">
                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;"

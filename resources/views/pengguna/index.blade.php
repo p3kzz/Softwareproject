@@ -181,6 +181,4 @@
             </div>
         </div>
     </section>
-
-    <!-- end client section -->
 @endsection

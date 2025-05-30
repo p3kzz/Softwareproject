@@ -1,51 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pengguna;
 
-use App\Models\mejaQr;
+use App\Http\Controllers\Controller;
+use App\Models\KategoriModel;
+use App\Models\MenuModel;
 use Illuminate\Http\Request;
 
-class PenggunaController extends Controller
+class menu extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (!session()->has('meja_id')) {
-            return redirect('/')->with('error', 'Silakan scan QR code terlebih dahulu.');
-        }
-        return view('pengguna.index');
-    }
-    public function scanQR($token)
-    {
-        $meja = \App\Models\MejaQr::where('qr_token', $token)->first();
-
-        if (!$meja) {
-            dd('Token tidak ditemukan: ' . $token);
-        }
-
-        session([
-            'meja_id' => $meja->id,
-            'nomor_meja' => $meja->nomor_meja,
-        ]);
-
-        return redirect()->route('pengguna.index');
-    }
-
-    public function tampil()
-    {
-        return view('pengguna.index');
-    }
-
-    public function menu()
-    {
-        return view('pengguna.menu');
-    }
-
-    public function data()
-    {
-        return view('pengguna.data');
+        $menus = MenuModel::with('kategori')->get();
+        $categories = KategoriModel::all();
+        return view('pengguna.menu', compact('menus', 'categories'));
     }
 
     /**
