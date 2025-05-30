@@ -72,9 +72,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('pengguna.menu.index') }}">Menu </a>
                             </li>
-                            @if (session()->has('nomor_meja'))
-                                <li>Meja #{{ session('nomor_meja') }}</li>
-                            @endif
                         </ul>
                         <div class="user_option">
                             @auth
