@@ -17,9 +17,7 @@
                                             Fast Food Restaurant
                                         </h1>
                                         <p>
-                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque,
-                                            labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                           Fast Food Restaurant is a place that offers a variety of delicious fast food options at affordable prices. It’s perfect for everyone from children to adults who are looking for convenient meals without compromising on taste.
                                         </p>
                                         <div class="btn-box">
                                             <a href="/menu" class="btn1">
@@ -40,9 +38,7 @@
                                             Fast Food Restaurant
                                         </h1>
                                         <p>
-                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque,
-                                            labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                            In today’s fast-paced world, Fast Food Restaurant is here as the perfect solution for those who need delicious, quick, and filling meals. Ideal for a lunch break during work or relaxing moments with family and friends.
                                         </p>
                                         <div class="btn-box">
                                             <a href="/menu" class="btn1">
@@ -63,9 +59,7 @@
                                             Fast Food Restaurant
                                         </h1>
                                         <p>
-                                            Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad
-                                            mollitia laborum quam quisquam esse error unde. Tempora ex doloremque,
-                                            labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                                            Enjoy the deliciousness in every bite at the best place for fast food lovers. At Fast Food Restaurant, we blend classic flavors with fast, friendly, and satisfying service. Discover a taste that keeps you coming back for more in every order!
                                         </p>
                                         <div class="btn-box">
                                             <a href="/menu" class="btn1">
@@ -109,13 +103,8 @@
                             </h2>
                         </div>
                         <p>
-                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                            alteration
-                            in some form, by injected humour, or randomised words which don't look even slightly believable.
-                            If you
-                            are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing
-                            hidden in
-                            the middle of text. All
+                           Hungry but gotta run? No worries, Warung Makanku’s got your back with tasty fast bites that hit the spot. Fast food, fast service, only at Warung Makanku!
+Our stuff’s fresh and made with good stuff, so you’re munching on quality every time. Hit us up now and snack smart anytime, at Warung Makanku!
                         </p>
                         <a href="">
                             Read More
