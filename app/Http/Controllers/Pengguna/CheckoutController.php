@@ -8,6 +8,7 @@ use App\Models\Pelanggan;
 use App\Models\pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Midtrans\Notification;
 
 class CheckoutController extends Controller
 {
@@ -34,12 +35,15 @@ class CheckoutController extends Controller
 
         $total = $this->hitungTotal($keranjang);
 
+        // Buat order_id unik
+        $orderId = 'ORDER-' . time();
+
         // Simpan pesanan dan detailnya
-        $pesanan = $this->buatPesanan($request, $user_id, $pelanggan_id, $total, $keranjang);
+        $pesanan = $this->buatPesanan($request, $user_id, $pelanggan_id, $total, $keranjang, $orderId);
 
         // Buat Snap Token Midtrans
         $this->konfigurasiMidtrans();
-        $snapToken = $this->buatSnapToken($request, $total);
+        $snapToken = $this->buatSnapToken($request, $total, $orderId); // kirim $orderId juga
         $pesanan->snap_token = $snapToken;
         $pesanan->save();
 
@@ -56,10 +60,6 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function success()
-    {
-        return view('checkout.success');
-    }
 
     // ============================
     // PRIVATE FUNCTION SECTION
@@ -95,7 +95,7 @@ class CheckoutController extends Controller
         }, 0);
     }
 
-    private function buatPesanan(Request $request, $user_id, $pelanggan_id, $total, $keranjang)
+    private function buatPesanan(Request $request, $user_id, $pelanggan_id, $total, $keranjang, $orderId)
     {
         $pesanan = pesanan::create([
             'users_id' => $user_id,
@@ -103,6 +103,7 @@ class CheckoutController extends Controller
             'meja_id' => $request->meja_id,
             'total_harga' => $total,
             'status' => 'pending',
+            'order_id' => $orderId,
         ]);
 
         foreach ($keranjang as $menu_id => $item) {
@@ -129,7 +130,7 @@ class CheckoutController extends Controller
     {
         return \Midtrans\Snap::getSnapToken([
             'transaction_details' => [
-                'order_id' => rand(), // Ganti ini jadi id pesanan jika ingin konsisten
+                'order_id' => 'ORDER-' . time(),
                 'gross_amount' => $total,
             ],
             'customer_details' => [
@@ -137,5 +138,41 @@ class CheckoutController extends Controller
                 'phone' => Auth::check() ? Auth::user()->no_hp : $request->no_hp,
             ]
         ]);
+    }
+    public function handleNotification(Request $request)
+    {
+        $notif = new Notification();
+
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $order_id = $notif->order_id;
+        $fraud = $notif->fraud_status;
+
+        // Cari pesanan
+        $pesanan = Pesanan::where('order_id', $order_id)->first();
+
+        if (!$pesanan) {
+            return response()->json(['message' => 'Pesanan tidak ditemukan'], 404);
+        }
+
+        // Update status
+        if ($transaction == 'settlement') {
+            $pesanan->status = 'paid';
+        } elseif ($transaction == 'pending') {
+            $pesanan->status = 'pending';
+        } elseif ($transaction == 'expire') {
+            $pesanan->status = 'expired';
+        } elseif ($transaction == 'cancel' || $transaction == 'deny') {
+            $pesanan->status = 'failed';
+        }
+
+        $pesanan->save();
+
+        return response()->json(['message' => 'Notification processed']);
+    }
+    public function success($id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+        return view('checkout.success', compact('pesanan'));
     }
 }

@@ -82,9 +82,12 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 // Halaman pembayaran (tampilkan SnapToken)
 Route::get('/checkout/bayar/{pesanan}', [CheckoutController::class, 'bayar'])->name('checkout.bayar');
 
-// Halaman sukses setelah redirect selesai
-Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::get('/checkout/success/{id}', [CheckoutController::class, 'success'])->name('checkout.success');
+
 
 // Notifikasi Midtrans (dikirim oleh Midtrans setelah transaksi sukses/gagal)
 Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
+// routes/web.php atau routes/api.php
+Route::post('/midtrans/notification', [CheckoutController::class, 'handleNotification']);
+
 require __DIR__ . '/auth.php';
