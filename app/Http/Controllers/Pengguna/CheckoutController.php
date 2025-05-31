@@ -24,37 +24,36 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi dan simpan data pengguna
         [$user_id, $pelanggan_id] = $this->handleUser($request);
 
-        // Ambil keranjang dari session
         $keranjang = session('keranjang', []);
         if (empty($keranjang)) {
-            return back()->with('error', 'Keranjang Kosong');
+            return response()->json(['error' => 'Keranjang kosong'], 400);
         }
 
         $total = $this->hitungTotal($keranjang);
-
-        // Buat order_id unik
         $orderId = 'ORDER-' . time();
 
-        // Simpan pesanan dan detailnya
         $pesanan = $this->buatPesanan($request, $user_id, $pelanggan_id, $total, $keranjang, $orderId);
 
-        // Buat Snap Token Midtrans
         $this->konfigurasiMidtrans();
-        $snapToken = $this->buatSnapToken($request, $total, $orderId); // kirim $orderId juga
+        $snapToken = $this->buatSnapToken($request, $total, $orderId);
+
         $pesanan->snap_token = $snapToken;
         $pesanan->save();
 
         session()->forget('keranjang');
 
-        return redirect()->route('checkout.bayar', $pesanan->id);
+        return response()->json([
+            'snap_token' => $snapToken,
+            'pesanan_id' => $pesanan->id,
+        ]);
     }
+
 
     public function bayar(pesanan $pesanan)
     {
-        return view('checkout.bayar', [
+        return view('checkout.guest-form', [
             'pesanan' => $pesanan,
             'snapToken' => $pesanan->snap_token,
         ]);
