@@ -33,6 +33,9 @@ Route::prefix('admin')->group(function () {
         Route::resource('kategori', KategoriController::class)->names('admin.kategori');
         Route::resource('mejaQr', mejaQrController::class)->names('admin.mejaQr');
         Route::resource('kasir', AddKasirController::class)->names('admin.kasir');
+        Route::get('/kasir/{id}/edit', [AddKasirController::class, 'edit'])->name('kasir.edit');
+        Route::put('/kasir/{id}', [AddKasirController::class, 'update'])->name('kasir.update');
+        Route::delete('/kasir/{id}', [AddKasirController::class, 'destroy'])->name('kasir.destroy');
     });
 });
 
