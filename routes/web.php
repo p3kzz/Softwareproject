@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\addkasir;
+use App\Http\Controllers\Admin\AddKasirController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\mejaQrController;
 use App\Http\Controllers\Admin\MenuController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Pengguna\MidtransController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Kasir;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,10 +29,10 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin');
-        Route::resource('kasir', KasirController::class)->names('admin.kasir');
         Route::resource('menu', MenuController::class)->names('admin.menu');
         Route::resource('kategori', KategoriController::class)->names('admin.kategori');
         Route::resource('mejaQr', mejaQrController::class)->names('admin.mejaQr');
+        Route::resource('kasir', AddKasirController::class)->names('admin.kasir');
     });
 });
 
@@ -78,16 +81,9 @@ Route::get('/checkout/guest', [CheckoutController::class, 'create'])->name('chec
 
 // Proses store (buat pesanan + dapatkan SnapToken)
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-
-// Halaman pembayaran (tampilkan SnapToken)
 Route::get('/checkout/bayar/{pesanan}', [CheckoutController::class, 'bayar'])->name('checkout.bayar');
-
 Route::get('/checkout/success/{id}', [CheckoutController::class, 'success'])->name('checkout.success');
-
-
-// Notifikasi Midtrans (dikirim oleh Midtrans setelah transaksi sukses/gagal)
 Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
-// routes/web.php atau routes/api.php
 Route::post('/midtrans/notification', [CheckoutController::class, 'handleNotification']);
 
 require __DIR__ . '/auth.php';

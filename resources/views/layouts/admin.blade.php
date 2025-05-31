@@ -150,7 +150,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="">
+                    <a class="nav-link  " href="{{ route('admin.kasir.index') }}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1"
@@ -267,7 +267,7 @@
     </main>
 
     <script src="{{ asset('sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
-    
+
     <!--   Core JS Files   -->
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
