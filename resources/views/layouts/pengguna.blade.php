@@ -140,7 +140,7 @@
     {{-- conten --}}
     @yield('content')
     {{-- conten --}}
-
+@yield('script')
     <!-- footer section -->
     <footer class="footer_section">
         <div class="container">
