@@ -34,8 +34,6 @@
         </div>
     </section>
 
-    <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre>
-
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
     </script>
 

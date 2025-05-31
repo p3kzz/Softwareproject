@@ -41,4 +41,40 @@ class AddKasirController extends Controller
 
         return redirect()->route('admin.kasir.index')->with('success', 'Kasir berhasil ditambahkan');
     }
+
+    public function edit($id)
+    {
+        $kasir = User::where('role', 'kasir')->findOrFail($id);
+        return view('admin.kasir-edit', compact('kasir'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $kasir = User::where('role', 'kasir')->findOrFail($id);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $kasir->id],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $kasir->name = $request->name;
+        $kasir->email = strtolower($request->email);
+
+        if ($request->filled('password')) {
+            $kasir->password = Hash::make($request->password);
+        }
+
+        $kasir->save();
+
+        return redirect()->route('admin.kasir.index')->with('success', 'Kasir berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $kasir = User::where('role', 'kasir')->findOrFail($id);
+        $kasir->delete();
+
+        return redirect()->route('admin.kasir.index')->with('success', 'Kasir berhasil dihapus');
+    }
 }
