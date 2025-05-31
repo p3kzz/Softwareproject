@@ -29,7 +29,10 @@
                                 <input type="hidden" name="meja_id" value="{{ session('meja_id') }}" required>
                             </div>
                             <div class="btn_box">
-                                <button type="submit">Checkout</button>
+
+
+                                   <button type="submit">Checkout</button>
+
                             </div>
                         </form>
                     </div>
@@ -38,4 +41,6 @@
         </div>
     </section>
     <!-- end book section -->
+
 @endsection
+
