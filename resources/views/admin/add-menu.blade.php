@@ -5,7 +5,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h6>Tambah Menu</h6>
+                        <h6>Add Menu</h6>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -44,7 +44,7 @@
                                             <div class="col-12">
                                                 <div class="name">
                                                     <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Gambar</label>
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Pictures</label>
                                                     <input type="file" class="form-control" name="gambar" id="image"
                                                         onchange="previewImage()" required>
                                                     <img id="imagePreview" src="#" alt="Preview Gambar"
@@ -61,7 +61,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="name">
-                                                    <label class="text-sm mb-0 text-capitalize font-weight-bold">Nama
+                                                    <label class="text-sm mb-0 text-capitalize font-weight-bold">Name
                                                         Menu</label>
                                                     <input type="text" class="form-control" name="nama_menu"
                                                         id="formGroupExampleInput" placeholder="Input" required>
@@ -77,10 +77,10 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="name">
-                                                    <label for="kategori">Kategori</label>
+                                                    <label for="kategori">Category</label>
                                                     <select name="kategori_id" id="kategori_id" class="form-control"
                                                         required>
-                                                        <option value="" disabled selected>Pilih Kategori</option>
+                                                        <option value="" disabled selected>Select Category</option>
                                                         @foreach ($kategori as $item)
                                                             <option value="{{ $item->id }}">{{ $item->nama_kategori }}
                                                             </option>
@@ -99,7 +99,7 @@
                                             <div class="col-12">
                                                 <div class="name">
                                                     <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Deskripsi</label>
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Description</label>
                                                     <input type="text" class="form-control" name="deskripsi"
                                                         id="formGroupExampleInput" placeholder="Input" required>
                                                 </div>
@@ -115,7 +115,7 @@
                                             <div class="col-12">
                                                 <div class="name">
                                                     <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Stok</label>
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Stock</label>
                                                     <input type="number" class="form-control" name="stok"
                                                         id="formGroupExampleInput" step="1" min="0"
                                                         placeholder="Input" required>
@@ -132,7 +132,7 @@
                                             <div class="col-12">
                                                 <div class="name">
                                                     <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Harga</label>
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Price</label>
                                                     <input type="number" class="form-control" name="harga"
                                                         id="formGroupExampleInput" step="0.01" min="0"
                                                         placeholder="Input" required>
@@ -144,8 +144,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a href="{{ route('admin.menu.index') }}" class="btn btn-danger">Kembali</a>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <a href="{{ route('admin.menu.index') }}" class="btn btn-danger">Back</a>
                         </div>
                     </form>
                 </div>

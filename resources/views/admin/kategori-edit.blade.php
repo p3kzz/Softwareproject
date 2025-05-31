@@ -15,18 +15,18 @@
         @method('PUT')
 
         <div class="card-header">
-            <h4>Edit Kategori</h4>
+            <h4>Edit Category</h4>
         </div>
 
         <div class="mb-3">
-            <label for="nama_kategori" class="form-label">Nama Kategori</label>
+            <label for="nama_kategori" class="form-label">Category Name</label>
             <input type="text" class="form-control" value="{{ $kategori->nama_kategori }}" id="nama_kategori"
                 placeholder="Masukkan nama kategori" name="nama_kategori" required>
         </div>
 
         <div class="card-footer">
-            <button class="btn btn-primary" type="submit">Simpan Perubahan</button>
-            <a href="{{ route('admin.kategori.index') }}" class="btn btn-danger">Batal</a>
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+            <a href="{{ route('admin.kategori.index') }}" class="btn btn-danger">cancel</a>
         </div>
     </form>
 @endsection

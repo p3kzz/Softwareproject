@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h6>Tambah Kategori</h6>
+                        <h6>Add Category</h6>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -28,7 +28,7 @@
                                             <div class="col-12">
                                                 <div class="name">
                                                     <label
-                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Kategori</label>
+                                                        class="text-sm mb-0 text-capitalize font-weight-bold">Category</label>
                                                     <input type="text"
                                                         class="form-control
                                                          @error('nama_kategori')  is-invalid @enderror"
@@ -45,8 +45,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                            <a href="{{ route('admin.kategori.index') }}" class="btn btn-danger">Kembali</a>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <a href="{{ route('admin.kategori.index') }}" class="btn btn-danger">Back</a>
                         </div>
                     </form>
                 </div>

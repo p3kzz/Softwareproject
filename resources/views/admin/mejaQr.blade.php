@@ -6,7 +6,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nomor Meja</th>
+                    <th>Tamble Number</th>
                     <th>QR Token</th>
                     <th>Link</th>
                     <th>QR Code</th> {{-- Tambahkan kolom baru --}}

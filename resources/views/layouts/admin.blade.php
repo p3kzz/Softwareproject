@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('public/images/favicon.png') }}">
     <title>
-        Warung Makanku
+        My Food Stall
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -29,7 +29,7 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="" target="_blank">
                 <img src="{{ asset('images/favicon.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Warung Makanku</span>
+                <span class="ms-1 font-weight-bold">My Food Stall</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -113,7 +113,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Kategori</span>
+                        <span class="nav-link-text ms-1">Category</span>
                     </a>
                 </li>
                 <li class="nav-item mt-3">
@@ -179,7 +179,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Register Account Kasir</span>
+                        <span class="nav-link-text ms-1">Register Cashier Account</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -212,7 +212,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Qr Meja</span>
+                        <span class="nav-link-text ms-1">Qr Table</span>
                     </a>
                 </li>
             </ul>
@@ -225,7 +225,7 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    <h6 class="font-weight-bolder mb-0">Warung Makanku</h6>
+                    <h6 class="font-weight-bolder mb-0">My Food Stall</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
