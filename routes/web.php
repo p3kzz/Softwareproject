@@ -77,7 +77,7 @@ Route::resource('checkout', CheckoutController::class);
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
 // Form isian untuk tamu (guest)
-Route::get('/checkout/guest', [CheckoutController::class, 'create'])->name('checkout.guest');
+Route::get('/checkout/guest/{pesanan}', [CheckoutController::class, 'create'])->name('checkout.guest');
 
 // Proses store (buat pesanan + dapatkan SnapToken)
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
