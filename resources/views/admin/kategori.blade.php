@@ -2,19 +2,19 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">Daftar Kategori Menu</h2>
+        <h2 class="mb-4">Menu Category List</h2>
 
         {{-- @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif --}}
-        <a href="{{ route('admin.kategori.create') }}" class="btn btn-primary mb-3">+ Tambah Kategori</a>
+        <a href="{{ route('admin.kategori.create') }}" class="btn btn-primary mb-3">+ Add Category</a>
 
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama Kategori</th>
-                    <th>Aksi</th>
+                    <th>Category Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +28,7 @@
                                 style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-sm btn-danger btn-delete">Hapus</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete">Delete</button>
                             </form>
                         </td>
 

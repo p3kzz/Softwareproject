@@ -13,7 +13,7 @@
     <meta name="author" content="" />
     <link rel="shortcut icon" href="images/favicon.png" type="">
 
-    <title> Warung Makanku </title>
+    <title> My Food Stall </title>
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/bootstrap.css') }}" />
@@ -54,7 +54,7 @@
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
                     <a class="navbar-brand" href="/index">
                         <span>
-                            Warung Makanku
+                            My Food Stall
                         </span>
                     </a>
 
@@ -72,7 +72,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('pengguna.menu.index') }}">Menu </a>
                             </li>
-                            <a href="{{ route('pengguna.keluar') }}" class="btn btn-danger">Keluar</a>
+                            <a href="{{ route('pengguna.keluar') }}" class="btn btn-danger">exit</a>
 
                         </ul>
                         <div class="user_option">
@@ -175,7 +175,7 @@
                 <div class="col-md-4 footer-col">
                     <div class="footer_detail">
                         <a href="" class="footer-logo">
-                            Warung Makanku
+                            My Food Stall
                         </a>
                         <p>
                             No Time? No Problem. Grab a Bite, Feel Alright!

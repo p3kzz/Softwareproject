@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="container-fluid py-4">
-        <a href="{{ route('admin.menu.create') }}" class="btn btn-primary ml-5 mt-3">+ Tambah Menu</a>
+        <a href="{{ route('admin.menu.create') }}" class="btn btn-primary ml-5 mt-3">+ Add Menu</a>
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
@@ -17,17 +17,17 @@
                                             Menu</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kategori</th>
+                                            Category</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Deskripsi</th>
+                                            Description</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Stok</th>
+                                            Stock</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Harga</th>
-                                        <th class="text-secondary opacity-7">Aksi</th>
+                                            Price</th>
+                                        <th class="text-secondary opacity-7">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,7 +67,7 @@
                                                     style="display:inline-block;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="button" class="btn btn-sm btn-danger btn-delete">Hapus</button>
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -75,7 +75,7 @@
                                 </tbody>
                             </table>
                             @if ($menus->isEmpty())
-                                <p class="text-center my-4">Belum ada menu ditambahkan.</p>
+                                <p class="text-center my-4">No Menu added Yet</p>
                             @endif
                         </div>
                     </div>

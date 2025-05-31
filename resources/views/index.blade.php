@@ -57,8 +57,7 @@
                 Attention
             </h1>
             <p>
-                Silahkan Scan QR Code terlebih dahulu, agar dapat memesan makanan di warung makanku, terima
-                kasih
+                Please scan the QR Code first, in order to order food at my food stall, thank you.
             </p>
             <div id="reader" width="600px"></div>
         </div>

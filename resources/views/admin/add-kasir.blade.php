@@ -77,7 +77,7 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary" type="submit">Register</button>
-                            <a href="" class="btn btn-danger">Kembali</a>
+                            <a href="" class="btn btn-danger">Back</a>
                         </div>
                     </form>
                 </div>
