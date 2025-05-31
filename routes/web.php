@@ -63,6 +63,10 @@ Route::middleware(['auth', 'pengguna'])->group(function () {
 
 Route::middleware(['auth', 'kasir'])->group(function () {
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+    Route::get('/kasi/{id}/edit', [KasirController::class, 'edit'])->name('kasir.edit');
+    Route::put('/edit/{id}', [KasirController::class, 'update'])->name('kasir.update');
+    Route::delete('/{id}', [KasirController::class, 'destroy'])->name('kasir.destroy');
+
 });
 
 // pengguna
@@ -81,6 +85,8 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.in
 
 // Form isian untuk tamu (guest)
 Route::get('/checkout/guest/{pesanan}', [CheckoutController::class, 'create'])->name('checkout.guest');
+Route::get('/checkout/riwayat', [CheckoutController::class, 'riwayat'])->name('checkout.riwayat');
+Route::get('/checkout/riwayat-guest', [CheckoutController::class, 'riwayatGuest'])->name('checkout.riwayat.guest');
 
 // Proses store (buat pesanan + dapatkan SnapToken)
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
