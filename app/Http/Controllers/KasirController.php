@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\pesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,9 @@ class KasirController extends Controller
      */
     public function index()
     {
-        return view('kasir.index');
+        $pesanan = pesanan::orderBy('created_at', 'desc')->get();
+
+        return view('kasir.index', compact('pesanan'));
     }
     public function showLoginForm()
     {
@@ -32,8 +35,37 @@ class KasirController extends Controller
             return redirect()->intended('/kasir');
         }
 
-        return redirect()->route('kasir.login')->withErrors([
-            'email' => 'Email atau password salah.',
+        return redirect()
+            ->route('kasir.login')
+            ->withErrors([
+                'email' => 'Email atau password salah.',
+            ]);
+    }
+
+    public function edit($id)
+    {
+        $pesanan = pesanan::findOrFail($id);
+        return view('kasir.edit', compact('pesanan'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,diproses,selesai',
         ]);
+
+        $pesanan = pesanan::findOrFail($id);
+        $pesanan->status = $request->status;
+        $pesanan->save();
+
+        return redirect()->route('kasir.index')->with('success', 'Status pesanan berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $pesanan = pesanan::findOrFail($id);
+        $pesanan->delete();
+
+        return redirect()->route('kasir.index')->with('success', 'Pesanan berhasil dihapus.');
     }
 }

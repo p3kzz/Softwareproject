@@ -104,118 +104,28 @@
         </nav>
         <!-- End Navbar -->
 
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Pesanan</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            @if ($pesanan->isEmpty())
-                                <p class="text-center my-4">Tidak ada pesanan yang ditemukan.</p>
-                            @else
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Order ID
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                    Jam/Tanggal
-                                                </th>
-                                                <th
-                                                    class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                    Total Harga
-                                                </th>
-                                                <th
-                                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                    Status
-                                                </th>
-                                                <th class="text-secondary opacity-7">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pesanan as $item)
-                                                <tr>
-                                                    <td>{{ $item->order_id }}</td>
-                                                    <td>{{ $item->created_at->format('H:i - d-m-Y') }}</td>
-                                                    <td>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
-                                                    <td class="text-center">{{ ucfirst($item->status) }}</td>
-                                                    <td>
-                                                        <a href="{{ route('kasir.edit', $item->id) }}"
-                                                            class="btn btn-sm btn-primary">Edit</a>
-                                                        <form action="{{ route('kasir.destroy', $item->id) }}"
-                                                            method="POST" style="display:inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button"
-                                                                class="btn btn-sm btn-danger btn-delete">Hapus</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
+        <div class="container mt-4">
+            <h3>Edit Status Pesanan</h3>
+            <form action="{{ route('kasir.update', $pesanan->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="form-group mb-3">
+                    <label for="status">Status</label>
+                    <select name="status" class="form-control" required>
+                        <option value="pending" {{ $pesanan->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="diproses" {{ $pesanan->status == 'diproses' ? 'selected' : '' }}>Diproses
+                        </option>
+                        <option value="selesai" {{ $pesanan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="dibatalkan" {{ $pesanan->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan
+                        </option>
+                    </select>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Update Status</button>
+                <a href="{{ route('kasir.index') }}" class="btn btn-secondary">Batal</a>
+            </form>
         </div>
 
     </main>
-
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                title: 'Gagal!',
-                text: '{{ session('error') }}',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-    <script>
-        // Konfirmasi sebelum menghapus
-        document.querySelectorAll('.btn-delete').forEach(button => {
-            button.addEventListener('click', function() {
-                const form = this.closest('form');
-                const url = form.getAttribute('data-url');
-
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
-                    }
-                });
-            });
-        });
-    </script>
 
     <script src="{{ asset('/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 

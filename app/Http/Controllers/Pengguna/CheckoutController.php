@@ -50,7 +50,6 @@ class CheckoutController extends Controller
         ]);
     }
 
-
     public function bayar(pesanan $pesanan)
     {
         return view('checkout.guest-form', [
@@ -58,7 +57,6 @@ class CheckoutController extends Controller
             'snapToken' => $pesanan->snap_token,
         ]);
     }
-
 
     // ============================
     // PRIVATE FUNCTION SECTION
@@ -89,9 +87,13 @@ class CheckoutController extends Controller
 
     private function hitungTotal(array $keranjang): int
     {
-        return array_reduce($keranjang, function ($total, $item) {
-            return $total + ($item['harga'] * $item['jumlah']);
-        }, 0);
+        return array_reduce(
+            $keranjang,
+            function ($total, $item) {
+                return $total + $item['harga'] * $item['jumlah'];
+            },
+            0,
+        );
     }
 
     private function buatPesanan(Request $request, $user_id, $pelanggan_id, $total, $keranjang, $orderId)
@@ -135,7 +137,7 @@ class CheckoutController extends Controller
             'customer_details' => [
                 'first_name' => Auth::check() ? Auth::user()->name : $request->nama,
                 'phone' => Auth::check() ? Auth::user()->no_hp : $request->no_hp,
-            ]
+            ],
         ]);
     }
     public function handleNotification(Request $request)
@@ -172,6 +174,37 @@ class CheckoutController extends Controller
     public function success($id)
     {
         $pesanan = Pesanan::findOrFail($id);
-        return view('checkout.success', compact('pesanan'));
+
+        if (Auth::check()) {
+            $riwayat = Pesanan::where('users_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        } else {
+            $pelangganId = session('pelanggan_id');
+            $riwayat = Pesanan::where('pelanggan_id', $pelangganId)->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('checkout.success', compact('pesanan', 'riwayat'));
+    }
+
+    public function riwayat()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Harap login terlebih dahulu.');
+        }
+
+        $pesanan = pesanan::where('users_id', Auth::id())->orderBy('created_at', 'desc')->get();
+
+        return view('checkout.riwayat', compact('pesanan'));
+    }
+
+    public function riwayatGuest()
+    {
+        $pelangganId = session('pelanggan_id');
+        if (!$pelangganId) {
+            return redirect()->route('checkout.create')->with('error', 'Data pelanggan tidak ditemukan.');
+        }
+
+        $pesanan = pesanan::where('pelanggan_id', $pelangganId)->orderBy('created_at', 'desc')->get();
+
+        return view('checkout.riwayat', compact('pesanan'));
     }
 }
