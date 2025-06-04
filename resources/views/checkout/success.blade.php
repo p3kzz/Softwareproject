@@ -17,6 +17,7 @@
                         <tr>
                             <th>Order ID</th>
                             <th>Jam/Tanggal</th>
+                            <th>menu</th>
                             <th>Total Harga</th>
                             <th>Status</th>
                         </tr>
@@ -26,10 +27,16 @@
                             <tr>
                                 <td>{{ $item->order_id }}</td>
                                 <td>{{ $item->created_at->format('H:i - d-m-Y') }}</td>
+                                <td>
+                                    @foreach ($item->detail_pesanan as $detail)
+                                        {{ $detail->menu->nama_menu }} ({{ $detail->jumlah }})
+                                    @endforeach
+                                </td>
                                 <td>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                 <td>{{ ucfirst($item->status) }}</td>
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>

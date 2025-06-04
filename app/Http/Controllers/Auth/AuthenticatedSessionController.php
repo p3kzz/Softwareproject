@@ -25,7 +25,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
         $user = Auth::user();
@@ -37,13 +36,20 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
-        if ($user->role === 'admin') {
-            return redirect()->intended('/admin');
-        } elseif ($user->role === 'pengguna') {
-            return redirect()->intended('/pengguna');
-        } else {
-            return redirect()->intended('/dashboard');
+        // ✅ Cek apakah sebelumnya user mau checkout
+        if (session('checkout_after_login')) {
+            session()->forget('checkout_after_login'); // hilangkan flag
+
+            // 👉 Buat pesanan langsung di sini (atau bisa redirect ke controller yang buat pesanan)
+            return redirect()->route('checkout.store.login');
         }
+
+        // Role-based redirect (jika bukan checkout)
+        if ($user->role === 'pengguna') {
+            return redirect()->intended('/pengguna');
+        }
+
+        return redirect()->intended('/dashboard');
     }
 
     /**
