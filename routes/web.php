@@ -57,19 +57,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'pengguna'])->group(function () {
-    Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
-});
+// Route::middleware(['auth', 'pengguna'])->group(function () {
+//     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
+// });
 
 Route::middleware(['auth', 'kasir'])->group(function () {
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
     Route::get('/kasi/{id}/edit', [KasirController::class, 'edit'])->name('kasir.edit');
     Route::put('/edit/{id}', [KasirController::class, 'update'])->name('kasir.update');
     Route::delete('/{id}', [KasirController::class, 'destroy'])->name('kasir.destroy');
-
 });
 
 // pengguna
+Route::get('/checkout/store/login', [CheckoutController::class, 'storeAfterLogin'])->name('checkout.store.login');
+
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
 Route::get('/keluar', [PenggunaController::class, 'keluar'])->name('pengguna.keluar');
 

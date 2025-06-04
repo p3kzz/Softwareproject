@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pengguna;
 
 use App\Http\Controllers\Controller;
 use App\Models\detail_pesanan;
+use App\Models\MenuModel;
 use App\Models\Pelanggan;
 use App\Models\pesanan;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        session(['checkout_after_login' => true]);
         return view('checkout.index');
     }
 
@@ -24,39 +26,106 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        [$user_id, $pelanggan_id] = $this->handleUser($request);
+        try {
+            [$user_id, $pelanggan_id] = $this->handleUser($request);
 
-        $keranjang = session('keranjang', []);
-        if (empty($keranjang)) {
-            return response()->json(['error' => 'Keranjang kosong'], 400);
+            $keranjang = session('keranjang', []);
+            if (empty($keranjang)) {
+                return response()->json(['error' => 'Keranjang kosong'], 400);
+            }
+
+            $total = $this->hitungTotal($keranjang);
+            $orderId = 'ORDER-' . time();
+
+            $pesanan = $this->buatPesanan($request, $user_id, $pelanggan_id, $total, $keranjang, $orderId);
+
+            $this->konfigurasiMidtrans();
+            $snapToken = $this->buatSnapToken($request, $total, $orderId);
+
+            $pesanan->snap_token = $snapToken;
+            $pesanan->save();
+
+            session()->forget('keranjang');
+
+            return response()->json([
+                'snap_token' => $snapToken,
+                'pesanan_id' => $pesanan->id,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $total = $this->hitungTotal($keranjang);
-        $orderId = 'ORDER-' . time();
-
-        $pesanan = $this->buatPesanan($request, $user_id, $pelanggan_id, $total, $keranjang, $orderId);
-
-        $this->konfigurasiMidtrans();
-        $snapToken = $this->buatSnapToken($request, $total, $orderId);
-
-        $pesanan->snap_token = $snapToken;
-        $pesanan->save();
-
-        session()->forget('keranjang');
-
-        return response()->json([
-            'snap_token' => $snapToken,
-            'pesanan_id' => $pesanan->id,
-        ]);
     }
 
     public function bayar(pesanan $pesanan)
     {
-        return view('checkout.guest-form', [
+        $view = Auth::check() ? 'checkout.bayar-login' : 'checkout.guest-form';
+
+        return view($view, [
             'pesanan' => $pesanan,
             'snapToken' => $pesanan->snap_token,
         ]);
     }
+
+
+    public function storeAfterLogin()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $meja_id = session('meja_id');
+
+        if (!$meja_id) {
+            return redirect()->route('checkout.index')->with('error', 'QR belum discan.');
+        }
+
+        $keranjang = session('keranjang', []);
+        if (empty($keranjang)) {
+            return redirect()->route('keranjang')->with('error', 'Keranjang kosong.');
+        }
+
+        $total = $this->hitungTotal($keranjang);
+
+        // Cek apakah user pernah dapat diskon
+        $isDiskon = !$user->pernah_diskon;
+
+        $hargaSetelahDiskon = $isDiskon ? $total * 0.9 : $total;
+
+        $pesanan = Pesanan::create([
+            'users_id' => $user->id,
+            'pelanggan_id' => null,
+            'meja_id' => $meja_id,
+            'total_harga' => $hargaSetelahDiskon,
+            'status' => 'pending',
+            'order_id' => 'ORDER-' . time(),
+        ]);
+
+        foreach ($keranjang as $menu_id => $item) {
+            detail_pesanan::create([
+                'pesanan_id' => $pesanan->id,
+                'menu_id' => $menu_id,
+                'harga' => $item['harga'],
+                'jumlah' => $item['jumlah'],
+            ]);
+        }
+
+        // Simpan token pembayaran
+        $this->konfigurasiMidtrans();
+        $snapToken = $this->buatSnapToken(new Request(), $hargaSetelahDiskon);
+        $pesanan->snap_token = $snapToken;
+        $pesanan->save();
+
+        // Tandai user sudah pernah diskon
+        if ($isDiskon) {
+            $user->pernah_diskon = true;
+            $user->save();
+        }
+
+        session()->forget('keranjang');
+
+        return redirect()->route('checkout.bayar', $pesanan->id);
+    }
+
+
+
 
     // ============================
     // PRIVATE FUNCTION SECTION
@@ -108,6 +177,17 @@ class CheckoutController extends Controller
         ]);
 
         foreach ($keranjang as $menu_id => $item) {
+            $menu = MenuModel::find($menu_id);
+            if (!$menu) {
+                throw new \Exception("Menu dengan ID $menu_id tidak ditemukan.");
+            }
+
+            if ($menu->stok < $item['jumlah']) {
+                throw new \Exception("Stok menu '{$menu->nama}' tidak mencukupi.");
+            }
+            $menu->stok -= $item['jumlah'];
+            $menu->save();
+
             detail_pesanan::create([
                 'pesanan_id' => $pesanan->id,
                 'menu_id' => $menu_id,
@@ -203,7 +283,10 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.create')->with('error', 'Data pelanggan tidak ditemukan.');
         }
 
-        $pesanan = pesanan::where('pelanggan_id', $pelangganId)->orderBy('created_at', 'desc')->get();
+        $pesanan = Pesanan::with('detail_pesanan.menu')
+            ->where('pelanggan_id', $pelangganId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('checkout.riwayat', compact('pesanan'));
     }
