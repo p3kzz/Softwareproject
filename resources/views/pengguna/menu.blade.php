@@ -246,6 +246,7 @@
             });
         });
 
+
         $('.keranjang-button-fixed').click(function() {
             $.get("{{ route('keranjang.ajax') }}", function(data) {
                 $('#keranjang-body').html(data.html);
@@ -253,3 +254,4 @@
         });
     </script>
 @endsection
+
