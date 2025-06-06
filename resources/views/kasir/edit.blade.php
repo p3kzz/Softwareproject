@@ -116,8 +116,6 @@
                         <option value="diproses" {{ $pesanan->status == 'diproses' ? 'selected' : '' }}>Diproses
                         </option>
                         <option value="selesai" {{ $pesanan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                        <option value="dibatalkan" {{ $pesanan->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan
-                        </option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Status</button>

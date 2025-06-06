@@ -77,8 +77,11 @@ Route::get('/keluar', [PenggunaController::class, 'keluar'])->name('pengguna.kel
 Route::get('/order/{token}', [PenggunaController::class, 'scanQR'])->name('scan.qr');
 Route::resource('menu', menu::class)->names('pengguna.menu');
 Route::get('/data', [PenggunaController::class, 'data']);
-Route::patch('menu/{id}/tambah', [menu::class, 'increment'])->name('menu.increment');
-Route::patch('menu/{id}/kurang', [menu::class, 'decrement'])->name('menu.decrement');
+Route::patch('/menu/increment/{id}', [menu::class, 'increment'])->name('menu.increment');
+Route::patch('/menu/decrement/{id}', [menu::class, 'decrement'])->name('menu.decrement');
+Route::get('/keranjang/ajax', [menu::class, 'getKeranjang'])->name('keranjang.ajax');
+
+
 
 // checkout
 Route::resource('checkout', CheckoutController::class);
