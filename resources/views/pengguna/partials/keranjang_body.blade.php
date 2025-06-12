@@ -34,9 +34,15 @@
     </tr>
     <tr>
         <td colspan="5">
-            <form action="{{ route('checkout.index') }}" method="GET">
-                <button type="submit" class="btn btn-danger btn-checkout">Checkout</button>
-            </form>
+            @if (Auth::check())
+                <form action="{{ route('checkout.storeAfterLogin') }}" method="GET">
+                    <button type="submit" class="btn btn-danger btn-checkout">Checkout</button>
+                </form>
+            @else
+                <form action="{{ route('checkout.index') }}" method="GET">
+                    <button type="submit" class="btn btn-danger btn-checkout">Checkout</button>
+                </form>
+            @endif
         </td>
     </tr>
 @else

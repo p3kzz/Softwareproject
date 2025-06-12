@@ -18,7 +18,7 @@
                             <span>atau</span>
                         </div>
 
-                        <a href="{{ route('checkout.create') }}" class="btn btn-primary mb-3">Lanjutkan sebagai Tamu</a>
+                        <a href="{{ route('checkout.guest') }}" class="btn btn-primary mb-3">Lanjutkan sebagai Tamu</a>
                     </div>
                 </div>
             </div>

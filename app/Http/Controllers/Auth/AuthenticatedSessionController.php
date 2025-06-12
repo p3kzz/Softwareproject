@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\pesanan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,17 +36,19 @@ class AuthenticatedSessionController extends Controller
                 'email' => 'Admin tidak boleh login dari halaman ini.',
             ]);
         }
-
-        // ✅ Cek apakah sebelumnya user mau checkout
+        // if (Auth::check()) {
+        //     return redirect()->route('checkout.storeAfterLogin');
+        // }
+        // session(['checkout_after_login' => true]);
         if (session('checkout_after_login')) {
-            session()->forget('checkout_after_login'); // hilangkan flag
-
-            // 👉 Buat pesanan langsung di sini (atau bisa redirect ke controller yang buat pesanan)
-            return redirect()->route('checkout.store.login');
+            session()->forget('checkout_after_login');
+            return redirect()->route('checkout.storeAfterLogin');
         }
 
-        // Role-based redirect (jika bukan checkout)
         if ($user->role === 'pengguna') {
+            pesanan::where('users_id', $user->id)
+                ->where('status', 'selesai')
+                ->delete();
             return redirect()->intended('/pengguna');
         }
 
