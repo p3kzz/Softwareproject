@@ -15,6 +15,9 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            return redirect()->route('checkout.storeAfterLogin');
+        }
         session(['checkout_after_login' => true]);
         return view('checkout.index');
     }
@@ -99,6 +102,16 @@ class CheckoutController extends Controller
         ]);
 
         foreach ($keranjang as $menu_id => $item) {
+            $menu = MenuModel::find($menu_id);
+            if (!$menu) {
+                throw new \Exception("Menu dengan ID $menu_id tidak ditemukan.");
+            }
+
+            if ($menu->stok < $item['jumlah']) {
+                throw new \Exception("Stok menu '{$menu->nama}' tidak mencukupi.");
+            }
+            $menu->stok -= $item['jumlah'];
+            $menu->save();
             detail_pesanan::create([
                 'pesanan_id' => $pesanan->id,
                 'menu_id' => $menu_id,
