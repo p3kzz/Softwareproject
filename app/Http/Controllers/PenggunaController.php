@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\mejaQr;
+use App\Models\MenuModel;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class PenggunaController extends Controller
@@ -15,7 +17,8 @@ class PenggunaController extends Controller
         if (!session()->has('meja_id')) {
             return redirect('/')->with('error', 'Silakan scan QR code terlebih dahulu.');
         }
-        return view('pengguna.index');
+        $rating = Rating::with(['user', 'pelanggan'])->latest()->get();
+        return view('pengguna.index', compact('rating'));
     }
     public function scanQR($token)
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AddKasirController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\mejaQrController;
 use App\Http\Controllers\Admin\MenuController;
@@ -10,9 +11,11 @@ use App\Http\Controllers\Pengguna\CheckoutController;
 use App\Http\Controllers\Pengguna\KeranjangController;
 use App\Http\Controllers\Pengguna\menu;
 use App\Http\Controllers\Pengguna\MidtransController;
+use App\Http\Controllers\Pengguna\RatingController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('index');
@@ -25,7 +28,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     Route::middleware(['auth', 'admin'])->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('admin');
+        Route::get('/', [DashboardController::class, 'index'])->name('admin');
         Route::resource('menu', MenuController::class)->names('admin.menu');
         Route::resource('kategori', KategoriController::class)->names('admin.kategori');
         Route::resource('mejaQr', mejaQrController::class)->names('admin.mejaQr');
@@ -81,5 +84,9 @@ Route::get('/checkout/success/{id}', [CheckoutController::class, 'success'])->na
 
 // Midtrans notification route
 Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])->name('midtrans.notification');
+
+// rating
+Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
+
 
 require __DIR__ . '/auth.php';

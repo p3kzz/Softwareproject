@@ -45,7 +45,10 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
+        if (session('checkout_after_login')) {
+            session()->forget('checkout_after_login');
+            return redirect()->route('checkout.storeAfterLogin');
+        }
         return redirect()->route('login');
     }
 }
