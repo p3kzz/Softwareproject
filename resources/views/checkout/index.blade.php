@@ -6,7 +6,7 @@
             <div class="headings_container text-center">
                 <h2>Pilih Metode Checkout</h2>
                 <p class="text-center">
-                    Silahkan Login Untuk Mendapatkan Diskon 10% dari Pesanan Anda
+                    Silahkan Login atau Buat Akun Anda Untuk Mendapatkan Diskon 10% dari Pembelian Pertama Anda!
                 </p>
             </div>
             <div class="row justify-content-center">
